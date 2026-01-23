@@ -1,26 +1,138 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
+All colors MUST be HSL.
+*/
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Açai-inspired color palette */
+    --background: 45 40% 96%;
+    --foreground: 270 60% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 270 60% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 270 60% 15%;
+
+    /* Deep purple - main brand color (açai) */
+    --primary: 270 65% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Lilac - soft accent */
+    --secondary: 270 50% 80%;
+    --secondary-foreground: 270 60% 15%;
+
+    --muted: 270 20% 95%;
+    --muted-foreground: 270 20% 45%;
+
+    /* Yellow - energetic CTA */
+    --accent: 45 95% 62%;
+    --accent-foreground: 270 60% 15%;
+
+    /* Burgundy - highlights */
+    --destructive: 350 85% 42%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 15% 88%;
+    --input: 270 15% 88%;
+    --ring: 270 65% 55%;
+
+    --radius: 1rem;
+
+    /* Custom design tokens */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(270 65% 55%),
+      hsl(280 70% 65%)
+    );
+    --gradient-hero: linear-gradient(
+      180deg,
+      hsl(270 50% 80% / 0.3),
+      hsl(45 40% 96%)
+    );
+    --shadow-soft: 0 4px 20px hsl(270 65% 55% / 0.15);
+    --shadow-glow: 0 0 40px hsl(270 65% 55% / 0.25);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 270 40% 8%;
+    --foreground: 270 10% 95%;
+
+    --card: 270 30% 12%;
+    --card-foreground: 270 10% 95%;
+
+    --popover: 270 30% 12%;
+    --popover-foreground: 270 10% 95%;
+
+    --primary: 270 65% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 270 40% 25%;
+    --secondary-foreground: 270 10% 95%;
+
+    --muted: 270 30% 18%;
+    --muted-foreground: 270 15% 60%;
+
+    --accent: 45 95% 62%;
+    --accent-foreground: 270 60% 15%;
+
+    --destructive: 350 85% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 30% 20%;
+    --input: 270 30% 20%;
+    --ring: 270 65% 60%;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(270 65% 60%),
+      hsl(280 70% 70%)
+    );
+    --gradient-hero: linear-gradient(
+      180deg,
+      hsl(270 40% 15% / 0.5),
+      hsl(270 40% 8%)
+    );
+    --shadow-soft: 0 4px 20px hsl(270 65% 60% / 0.25);
+    --shadow-glow: 0 0 40px hsl(270 65% 60% / 0.35);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
