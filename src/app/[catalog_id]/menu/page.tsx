@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -10,8 +11,11 @@ import { toast } from "sonner";
 import { priceFormatter } from "@/formatters/priceFormatter";
 import { useGetProducts } from "@/services/product/product-query";
 import { Product } from "@/services/product/product-schema";
+import { useParams } from "next/navigation";
 
 const Menu = () => {
+  const { catalog_id } = useParams<{ catalog_id: string }>();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("todos");
   const {
@@ -36,6 +40,7 @@ const Menu = () => {
   const { data: products, ...productQuery } = useGetProducts({
     category: selectedCategory,
     text: searchTerm,
+    catalog_id,
   });
 
   const handleAddToCart = (product: Product) => {

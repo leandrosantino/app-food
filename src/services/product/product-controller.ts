@@ -7,10 +7,12 @@ export const productController = new Elysia({ prefix: "/product" }).get(
   async ({ query: filters, set }) => {
     const query = supabase.from("product").select<string, Product>("*");
 
+    query.eq("catalog_id", filters.catalog_id);
+
     if (filters.category != "todos") query.eq("category", filters.category);
     if (filters.text != "") {
       query.like("name", `%${filters.text}%`);
-      // query.like("description", `%${filters.text}%`);
+      query.like("description", `%${filters.text}%`);
     }
 
     const { data, error } = await query;
@@ -20,12 +22,10 @@ export const productController = new Elysia({ prefix: "/product" }).get(
       throw error;
     }
 
-    console.log(data);
-
     return data;
   },
   {
-    query: productFiltersSchema.optional(),
+    query: productFiltersSchema,
     // response: productSchema,
   },
 );

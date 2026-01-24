@@ -3,13 +3,13 @@ import z from "zod";
 
 const env = z
   .object({
-    SUPABASE_URL: z.string(),
-    SUPABASE_PUBLISHABLE_DEFAULT_KEY: z.string(),
+    NEXT_PUBLIC_SUPABASE_URL: z.string(),
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY: z.string(),
   })
   .parse(process.env);
 
-const supabaseUrl = env.SUPABASE_URL;
-const supabaseKey = env.SUPABASE_PUBLISHABLE_DEFAULT_KEY;
+const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY;
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 

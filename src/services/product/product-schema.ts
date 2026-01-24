@@ -7,6 +7,7 @@ export const productSchema = z.object({
   description: z.string(),
   image_url: z.url(),
   category: z.enum(["acai", "lanches", "salgados", "bebidas", "combos"]),
+  catalog_id: z.number(),
 });
 
 export type Product = z.infer<typeof productSchema>;
@@ -14,6 +15,7 @@ export type Product = z.infer<typeof productSchema>;
 export const productFiltersSchema = z.object({
   category: z.string().optional(),
   text: z.string().optional(),
+  catalog_id: z.string().optional(),
 });
 
 export type ProductFilters = z.infer<typeof productFiltersSchema>;
