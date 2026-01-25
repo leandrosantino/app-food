@@ -16,7 +16,7 @@ export type Product = z.infer<typeof productSchema>;
 export const productFiltersSchema = z.object({
   category: z.string().optional(),
   text: z.string().optional(),
-  catalog_id: z.string().optional(),
+  catalog_slug: z.string().optional(),
 });
 
 export type ProductFilters = z.infer<typeof productFiltersSchema>;

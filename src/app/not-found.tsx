@@ -6,7 +6,10 @@ export default function NotFound() {
         <p className="mb-4 text-xl text-muted-foreground">
           Ops! Página não encontrada
         </p>
-        <a href="/" className="text-primary underline hover:text-primary/80">
+        <a
+          href="/admin"
+          className="text-primary underline hover:text-primary/80"
+        >
           Voltar para o Início
         </a>
       </div>

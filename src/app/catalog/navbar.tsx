@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 
 const Navbar = () => {
-  const { catalog_id } = useParams<{ catalog_id: string }>();
+  const { catalog_slug } = useParams<{ catalog_slug: string }>();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,7 +57,7 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <Link
                 key={link.path}
-                href={"/catalog/" + catalog_id + link.path}
+                href={"/catalog/" + catalog_slug + link.path}
                 className={`font-medium transition-colors hover:text-primary ${
                   location.endsWith(link.path)
                     ? "text-primary"

@@ -8,16 +8,16 @@ import z from "zod";
 import { Category } from "@/services/category/category-schema";
 
 type MenuProps = {
-  params: Promise<{ catalog_id: "1" }>;
+  params: Promise<{ catalog_slug: string }>;
 };
 
 export default async function Menu({ params }: MenuProps) {
-  const { catalog_id } = await params;
+  const { catalog_slug } = await params;
 
   let categories: Category[] = [];
   const categoryRequest = await api.category.get({
     query: {
-      catalog_id: catalog_id,
+      catalog_slug,
     },
   });
 
@@ -25,19 +25,10 @@ export default async function Menu({ params }: MenuProps) {
     categories = [{ id: 0, name: "Todos" }].concat(categoryRequest.data);
   }
 
-  // const categories = [
-  //   { id: "todos", name: "Todos" },
-  //   { id: "acai", name: "Açaí" },
-  //   { id: "lanches", name: "Lanches" },
-  //   { id: "salgados", name: "Salgados" },
-  //   { id: "bebidas", name: "Bebidas" },
-  //   { id: "combos", name: "Combos" },
-  // ];
-
   let products: Product[] = [];
   const { data, error } = await api.product.get({
     query: {
-      catalog_id,
+      catalog_slug,
       category: "todos",
       text: "",
     },
