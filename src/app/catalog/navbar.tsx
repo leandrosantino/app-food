@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 
 const Navbar = () => {
+  const { catalog_id } = useParams<{ catalog_id: string }>();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = usePathname();
@@ -24,7 +26,7 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: "Início", path: "/" },
+    { name: "Início", path: "/home" },
     { name: "Cardápio", path: "/menu" },
     { name: "Sobre Nós", path: "/about" },
     { name: "Depoimentos", path: "/reviews" },
@@ -55,9 +57,11 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <Link
                 key={link.path}
-                href={link.path}
+                href={"/catalog/" + catalog_id + link.path}
                 className={`font-medium transition-colors hover:text-primary ${
-                  location === link.path ? "text-primary" : "text-foreground/70"
+                  location.endsWith(link.path)
+                    ? "text-primary"
+                    : "text-foreground/70"
                 }`}
               >
                 {link.name}

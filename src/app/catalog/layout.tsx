@@ -1,10 +1,8 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import Navbar from "@/components/Navbar";
 import { CartProvider } from "@/contexts/CartContext";
 import Providers from "./providers";
-import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import Navbar from "./navbar";
+import Footer from "./footer";
 
 export default function RootLayout({
   children,
