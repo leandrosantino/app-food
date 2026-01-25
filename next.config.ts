@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    domains: ["xpmrmuypbgnnknxjsjpe.supabase.co"],
+    remotePatterns: [{ hostname: "xpmrmuypbgnnknxjsjpe.supabase.co" }],
   },
 };
 

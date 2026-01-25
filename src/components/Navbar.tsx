@@ -40,7 +40,7 @@ const Navbar = () => {
       }`}
     >
       <div
-        className={`container mx-auto px-4 ${isOpen ? "max-sm:bg-white shadow-lg" : ""}`}
+        className={`container mx-auto px-4 ${isOpen ? "max-sm:bg-card/95 backdrop-blur-md shadow-soft" : ""}`}
       >
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
