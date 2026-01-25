@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useProducts } from "../contexts/products-context";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -14,9 +14,13 @@ export function ProductFilters() {
     setSearchTerm,
   } = useProducts();
 
+  useEffect(() => {
+    console.log(categories);
+  }, [categories]);
+
   const getPlaceholder = () =>
     categories
-      .map((item) => item.id)
+      .map((item) => item.name)
       .splice(1, 3)
       .join(", ");
 
@@ -36,8 +40,12 @@ export function ProductFilters() {
         {categories.map((category) => (
           <Button
             key={category.id}
-            variant={selectedCategory === category.id ? "default" : "outline"}
-            onClick={() => setSelectedCategory(category.id)}
+            variant={
+              selectedCategory === category.id.toString()
+                ? "default"
+                : "outline"
+            }
+            onClick={() => setSelectedCategory(category.id.toString())}
             className="rounded-full"
           >
             {category.name}

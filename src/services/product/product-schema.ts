@@ -1,4 +1,5 @@
 import z from "zod";
+import { categorySchema } from "../category/category-schema";
 
 export const productSchema = z.object({
   id: z.string(),
@@ -6,8 +7,8 @@ export const productSchema = z.object({
   name: z.string(),
   description: z.string(),
   image_url: z.url(),
-  category: z.enum(["acai", "lanches", "salgados", "bebidas", "combos"]),
-  catalog_id: z.number(),
+  category: categorySchema.optional(),
+  category_id: z.number(),
 });
 
 export type Product = z.infer<typeof productSchema>;

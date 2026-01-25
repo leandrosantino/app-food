@@ -1,4 +1,5 @@
 "use client";
+import { Category } from "@/services/category/category-schema";
 import { Product } from "@/services/product/product-schema";
 import {
   createContext,
@@ -9,11 +10,6 @@ import {
   useEffect,
   useState,
 } from "react";
-
-export type Category = {
-  id: string;
-  name: string;
-};
 
 type ProductsContextType = {
   selectedCategory: string;
@@ -39,7 +35,7 @@ export function ProductsProvider({
   products,
   categories,
 }: ProductsProviderProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>("todos");
+  const [selectedCategory, setSelectedCategory] = useState<string>("0");
   const [searchTerm, setSearchTerm] = useState("");
 
   const [productsState, setProductsState] = useState<Product[]>([]);
@@ -50,7 +46,8 @@ export function ProductsProvider({
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory =
-        selectedCategory === "todos" || product.category === selectedCategory;
+        selectedCategory === "0" ||
+        product.category_id.toString() === selectedCategory;
       return matchesSearch && matchesCategory;
     });
 
