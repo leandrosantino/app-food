@@ -2,17 +2,22 @@ import Elysia from "elysia";
 import supabase from "@/lib/supabase";
 import { Category } from "./category-schema";
 import z from "zod";
+import { getCatalogBySlug } from "../catalog/catalog-controller";
 
 export const categoryController = new Elysia({ prefix: "/category" }).get(
   "/",
   async ({ query: filters, set }) => {
-    const query = supabase.from("category").select<string, Category>("*");
+    const catalog = await getCatalogBySlug(filters.catalog_slug);
+    if (catalog == null) {
+      return [];
+    }
 
-    query.eq("catalog_id", filters.catalog_slug);
-    query.order("id", { ascending: true });
+    const { data, error } = await supabase
+      .from("category")
+      .select<string, Category>("*")
+      .eq("catalog_id", catalog.id)
+      .order("id", { ascending: true });
 
-    const { data, error } = await query;
-    console.log(data, error);
     if (error) {
       set.status = 500;
       throw error;
