@@ -32,8 +32,8 @@ ${formData.message}
     `.trim();
 
     const phoneNumber = "558193766292";
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
+    // const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    // window.open(url, "_blank");
 
     toast.success("Mensagem enviada! Responderemos em breve.");
     setFormData({ name: "", email: "", phone: "", message: "" });
