@@ -67,7 +67,7 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link href="/menu">
+            <Link href={`/catalog/${catalog_slug}/menu`}>
               <Button variant="default" className="relative">
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 Carrinho

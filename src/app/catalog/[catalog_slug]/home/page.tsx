@@ -3,7 +3,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
 import Link from "next/link";
 
-export default function Home() {
+type MenuProps = {
+  params: Promise<{ catalog_slug: string }>;
+};
+export default async function Home({ params }: MenuProps) {
+  const { catalog_slug } = await params;
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -49,7 +54,7 @@ export default function Home() {
               animationDelay: "0.4s",
             }}
           >
-            <Link href="/menu">
+            <Link href={`/catalog/${catalog_slug}/menu`}>
               <Button
                 size="lg"
                 className="text-lg px-8 py-6 shadow-glow hover:scale-105 transition-transform"
@@ -176,7 +181,7 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Link href="/menu">
+            <Link href={`/catalog/${catalog_slug}/menu`}>
               <Button size="lg" variant="outline" className="px-8">
                 Ver Cardápio Completo
                 <ArrowRight className="ml-2 h-5 w-5" />
