@@ -98,10 +98,10 @@ export default function Navbar({ catalog }: Props) {
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
-                  href={link.path}
+                  href={"/catalog/" + catalog.slug + link.path}
                   onClick={() => setIsOpen(false)}
                   className={`font-medium transition-colors hover:text-primary ${
-                    location === link.path
+                    location.endsWith(link.path)
                       ? "text-primary"
                       : "text-foreground/70"
                   }`}
@@ -109,7 +109,10 @@ export default function Navbar({ catalog }: Props) {
                   {link.name}
                 </Link>
               ))}
-              <Link href="/menu" onClick={() => setIsOpen(false)}>
+              <Link
+                href={`/catalog/${catalog.slug}/menu`}
+                onClick={() => setIsOpen(false)}
+              >
                 <Button variant="default" className="w-full relative">
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   Carrinho
