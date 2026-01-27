@@ -1,15 +1,17 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
+import { Catalog } from "@/services/catalog/catalog-schema";
 
-const Navbar = () => {
-  const { catalog_slug } = useParams<{ catalog_slug: string }>();
+type Props = {
+  catalog: Catalog;
+};
 
+export default function Navbar({ catalog }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = usePathname();
@@ -27,7 +29,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Início", path: "/home" },
-    { name: "Cardápio", path: "/menu" },
+    { name: "Produtos", path: "/menu" },
     { name: "Sobre Nós", path: "/about" },
     { name: "Depoimentos", path: "/reviews" },
     { name: "Contato", path: "/contact" },
@@ -48,7 +50,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              NEXUS
+              {catalog.name}
             </div>
           </Link>
 
@@ -57,7 +59,7 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <Link
                 key={link.path}
-                href={"/catalog/" + catalog_slug + link.path}
+                href={"/catalog/" + catalog.slug + link.path}
                 className={`font-medium transition-colors hover:text-primary ${
                   location.endsWith(link.path)
                     ? "text-primary"
@@ -67,7 +69,7 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link href={`/catalog/${catalog_slug}/menu`}>
+            <Link href={`/catalog/${catalog.slug}/menu`}>
               <Button variant="default" className="relative">
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 Carrinho
@@ -124,6 +126,4 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

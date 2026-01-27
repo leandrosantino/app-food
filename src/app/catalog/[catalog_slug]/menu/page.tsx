@@ -42,7 +42,7 @@ export default async function Menu({ params }: MenuProps) {
     <div className="min-h-screen pt-24 pb-12">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 animate-fade-in">
-          Nosso Cardápio
+          Nossos Produtos
         </h1>
         <ProductsProvider {...{ products, categories }}>
           <ProductFilters />

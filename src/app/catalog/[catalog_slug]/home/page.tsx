@@ -2,30 +2,27 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
 import Link from "next/link";
+import { getCatalogBySlug } from "@/services/catalog/catalog-controller";
+import { ca } from "zod/v4/locales";
 
-type MenuProps = {
+type Props = {
   params: Promise<{ catalog_slug: string }>;
 };
-export default async function Home({ params }: MenuProps) {
+export default async function Home({ params }: Props) {
   const { catalog_slug } = await params;
+
+  const catalog = await getCatalogBySlug(catalog_slug);
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
         <div className="absolute inset-0 z-0 opacity-20">
-          <div className="grid grid-cols-2 h-full">
+          <div className="grid grid-cols-1 h-full">
             <div
-              className="bg-cover bg-center animate-fade-in"
+              className="w-full bg-cover bg-center animate-fade-in"
               style={{
-                backgroundImage: `url(https://xpmrmuypbgnnknxjsjpe.supabase.co/storage/v1/object/public/product_images/hero-acai.jpg)`,
-              }}
-            />
-            <div
-              className="bg-cover bg-center animate-fade-in"
-              style={{
-                backgroundImage: `url(https://xpmrmuypbgnnknxjsjpe.supabase.co/storage/v1/object/public/product_images/hero-burger.jpg)`,
-                animationDelay: "0.2s",
+                backgroundImage: `url(${catalog?.background_image_url})`,
               }}
             />
           </div>
@@ -34,10 +31,9 @@ export default async function Home({ params }: MenuProps) {
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in-up">
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Sabor que bate forte,
+              {catalog?.slogan}
             </span>
             <br />
-            <span className="text-foreground">energia que contagia!</span>
           </h1>
           <p
             className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in-up"
@@ -45,8 +41,7 @@ export default async function Home({ params }: MenuProps) {
               animationDelay: "0.2s",
             }}
           >
-            Açaí artesanal, lanches deliciosos e bebidas energizantes feitos com
-            muito carinho
+            {catalog?.description}sadfs
           </p>
           <div
             className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up"
@@ -64,7 +59,7 @@ export default async function Home({ params }: MenuProps) {
               </Button>
             </Link>
             <a
-              href="https://wa.me/5511999999999"
+              href={`https://wa.me/${catalog?.phone_number}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -84,7 +79,7 @@ export default async function Home({ params }: MenuProps) {
       <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">
-            Por que escolher o NEXUS?
+            Por que escolher {catalog?.name}?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -124,7 +119,7 @@ export default async function Home({ params }: MenuProps) {
       {/* Popular Items Preview */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-4">Mais Pedidos</h2>
+          <h2 className="text-4xl font-bold text-center mb-4">TOP 10</h2>
           <p className="text-center text-muted-foreground mb-12">
             Os favoritos dos nossos clientes que você não pode perder
           </p>
@@ -183,7 +178,7 @@ export default async function Home({ params }: MenuProps) {
           <div className="text-center mt-12">
             <Link href={`/catalog/${catalog_slug}/menu`}>
               <Button size="lg" variant="outline" className="px-8">
-                Ver Cardápio Completo
+                Ver todos os produtos
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
