@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
 import Link from "next/link";
 import { getCatalogBySlug } from "@/services/catalog/catalog-controller";
-import { ca } from "zod/v4/locales";
 
 type Props = {
   params: Promise<{ catalog_slug: string }>;
@@ -128,13 +127,13 @@ export default async function Home({ params }: Props) {
               {
                 name: "Açaí Clássico",
                 price: "R$ 12,99",
-                image: "hero-acai.jpg",
+                image: "acai-classic.jpg",
                 rating: 5,
               },
               {
                 name: "Hambúrguer com Bacon",
                 price: "R$ 13,99",
-                image: "hero-burger.jpg",
+                image: "burger-bacon.jpg",
                 rating: 5,
               },
             ].map((item, idx) => (
@@ -197,7 +196,7 @@ export default async function Home({ params }: Props) {
             rapidinho!
           </p>
           <a
-            href="https://wa.me/5511999999999"
+            href={`https://wa.me/${catalog?.phone_number}`}
             target="_blank"
             rel="noopener noreferrer"
           >
