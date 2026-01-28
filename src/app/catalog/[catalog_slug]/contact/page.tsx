@@ -3,7 +3,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import { getCatalogBySlug } from "@/services/catalog/catalog-controller";
+import {
+  getAddressByCatalog,
+  getCatalogBySlug,
+  getOpeningHoursByCatalog,
+} from "@/services/catalog/catalog-controller";
 import { ca } from "zod/v4/locales";
 
 type Props = {
@@ -14,6 +18,10 @@ export default async function Contact({ params }: Props) {
   const { catalog_slug } = await params;
 
   const catalog = await getCatalogBySlug(catalog_slug);
+  if (!catalog) return;
+
+  const address = await getAddressByCatalog(catalog.id);
+  const openingHours = await getOpeningHoursByCatalog(catalog?.id);
 
   return (
     <div className="min-h-screen pt-24 pb-12">
@@ -95,9 +103,9 @@ export default async function Contact({ params }: Props) {
                 <div>
                   <h3 className="font-semibold mb-2">Endereço</h3>
                   <p className="text-muted-foreground">
-                    Sua Rua, 123
+                    {address?.street}, {address?.number}
                     <br />
-                    Cidade - Estado, CEP
+                    {address?.city} - {address?.state}, CEP: {address?.zip_code}
                   </p>
                 </div>
               </div>
@@ -139,9 +147,16 @@ export default async function Contact({ params }: Props) {
                     Horário de Funcionamento
                   </h3>
                   <div className="text-muted-foreground space-y-1">
-                    <p>Segunda - Sexta: 9h - 20h</p>
-                    <p>Sábado: 10h - 18h</p>
-                    <p>Domingo: Fechado</p>
+                    {openingHours.map((item) => (
+                      <p key={item.id}>
+                        {item.day_of_week}:{" "}
+                        {item.status === "aberto" ? (
+                          `${item.open_time}h - ${item.close_time}h`
+                        ) : (
+                          <span className="text-red-500">{item.status}</span>
+                        )}
+                      </p>
+                    ))}
                   </div>
                 </div>
               </div>

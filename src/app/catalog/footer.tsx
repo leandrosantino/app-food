@@ -1,13 +1,14 @@
 import { getCatalogBySlug } from "@/services/catalog/catalog-controller";
-import { Catalog } from "@/services/catalog/catalog-schema";
+import { Address, Catalog } from "@/services/catalog/catalog-schema";
 import { Instagram, MessageCircle } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
   catalog: Catalog;
+  address: Address | null;
 };
 
-export default function Footer({ catalog }: Props) {
+export default function Footer({ catalog, address }: Props) {
   return (
     <footer className="bg-card border-t border-border mt-20">
       <div className="container mx-auto px-4 py-12">
@@ -63,8 +64,12 @@ export default function Footer({ catalog }: Props) {
             <div className="space-y-2 text-sm text-muted-foreground">
               <p>WhatsApp: {catalog.phone_number}</p>
               <p>Email: {catalog.email}</p>
-              <p>Endereço: Sua Rua, 123</p>
-              <p>Cidade - Estado, CEP</p>
+              <p className="text-muted-foreground">
+                {address?.street}, {address?.number}
+              </p>
+              <p>
+                {address?.city} - {address?.state}, CEP: {address?.zip_code}
+              </p>
             </div>
           </div>
 
