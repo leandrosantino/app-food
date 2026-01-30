@@ -1,8 +1,8 @@
 import Elysia from "elysia";
-import supabase from "@/lib/supabase";
 import { Category } from "./category-schema";
 import z from "zod";
 import { getCatalogBySlug } from "../catalog/catalog-controller";
+import supabase from "@/supabase";
 
 export const categoryController = new Elysia({ prefix: "/category" }).get(
   "/",

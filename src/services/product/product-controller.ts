@@ -1,7 +1,8 @@
 import Elysia from "elysia";
 import { Product, productFiltersSchema, productSchema } from "./product-schema";
-import supabase from "@/lib/supabase";
+import { supabaseServerClient } from "@/supabase/server";
 import { getCatalogBySlug } from "../catalog/catalog-controller";
+import supabase from "@/supabase";
 
 export const productController = new Elysia({ prefix: "/product" }).get(
   "/",
