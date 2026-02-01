@@ -9,6 +9,7 @@ import {
   getOpeningHoursByCatalog,
 } from "@/services/catalog/catalog-controller";
 import { ca } from "zod/v4/locales";
+import { phoneNumberFromatter } from "@/formatters/phoneNumberFromatter";
 
 type Props = {
   params: Promise<{ catalog_slug: string }>;
@@ -119,7 +120,7 @@ export default async function Contact({ params }: Props) {
                 <div>
                   <h3 className="font-semibold mb-2">Telefone & WhatsApp</h3>
                   <p className="text-muted-foreground">
-                    {catalog?.phone_number}
+                    {phoneNumberFromatter(catalog?.phone_number)}
                   </p>
                 </div>
               </div>

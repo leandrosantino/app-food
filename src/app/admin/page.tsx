@@ -1,18 +1,16 @@
 import { redirect } from "next/navigation";
 
 import { LogoutButton } from "@/components/logout-button";
-import { createClient } from "@/lib/server";
+import { supabaseServerClient } from "@/supabase/server";
 
 export default async function ProtectedPage() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getClaims();
+  const supabase = await supabaseServerClient();
+  const { data, error } = await supabase.from("address").select("*");
 
   return (
-    <div className="flex h-svh w-full items-center justify-center gap-2">
-      <p>
-        Hello <span>{data?.claims.email}</span>
-      </p>
+    <div className="p-4 flex flex-wrap gap-4">
       <LogoutButton />
+      <pre>{!error && JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }

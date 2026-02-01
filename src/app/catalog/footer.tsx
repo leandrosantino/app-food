@@ -1,3 +1,4 @@
+import { phoneNumberFromatter } from "@/formatters/phoneNumberFromatter";
 import { getCatalogBySlug } from "@/services/catalog/catalog-controller";
 import { Address, Catalog } from "@/services/catalog/catalog-schema";
 import { Instagram, MessageCircle } from "lucide-react";
@@ -62,7 +63,7 @@ export default function Footer({ catalog, address }: Props) {
           <div>
             <h4 className="font-semibold mb-4">Contato</h4>
             <div className="space-y-2 text-sm text-muted-foreground">
-              <p>WhatsApp: {catalog.phone_number}</p>
+              <p>WhatsApp: {phoneNumberFromatter(catalog.phone_number)}</p>
               <p>Email: {catalog.email}</p>
               <p className="text-muted-foreground">
                 {address?.street}, {address?.number}
