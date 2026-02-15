@@ -40,7 +40,7 @@ export default async function Home({ params }: Props) {
               animationDelay: "0.2s",
             }}
           >
-            {catalog?.description}sadfs
+            {catalog?.description}
           </p>
           <div
             className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up"

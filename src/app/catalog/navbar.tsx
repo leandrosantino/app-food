@@ -6,6 +6,8 @@ import { Menu, X, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { Catalog } from "@/services/catalog/catalog-schema";
+import Image from "next/image";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type Props = {
   catalog: Catalog;
@@ -44,13 +46,24 @@ export default function Navbar({ catalog }: Props) {
       }`}
     >
       <div
-        className={`container mx-auto px-4 ${isOpen ? "max-sm:bg-card/95 backdrop-blur-md shadow-soft" : ""}`}
+        className={`container mx-auto px-4 ${isOpen ? "max-md:bg-card/95 backdrop-blur-md shadow-soft" : ""}`}
       >
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              {catalog.name}
+          <Link
+            href={`/catalog/${catalog.slug}/home`}
+            className="flex items-center space-x-2"
+          >
+            <div className="flex gap-4 items-center text-2xl font-bold bg-gradient-primary bg-clip-text">
+              <Image
+                src={catalog.brand_image_url}
+                alt=""
+                width={50}
+                height={50}
+              />
+              <span className={`max-lg:${isOpen ? "none" : "hidden"}`}>
+                {catalog.name}
+              </span>
             </div>
           </Link>
 
