@@ -1,23 +1,44 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/contexts/CartContext";
 import { priceFormatter } from "@/formatters/priceFormatter";
+import { eden } from "@/lib/eden";
+import { getCatalogBySlug } from "@/services/catalog/catalog-controller";
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export function CartSummary() {
   const { items, removeItem, updateQuantity, updateNote, clearCart, total } =
     useCart();
 
-  const handleWhatsAppOrder = () => {
+  const [clientName, setClientName] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+
+  const { catalog_slug } = useParams<{ catalog_slug: string }>();
+
+  const handleWhatsAppOrder = async () => {
     if (items.length === 0) {
       toast.error("Seu carrinho está vazio!");
       return;
     }
+    const { data: catalog, error } = await eden.catalog.get({
+      query: { slug: catalog_slug },
+    });
 
-    let message = "*Pedido PICA PAL*\n\n";
+    if (error) return;
+
+    let message = "Olá, gostaria de fazer um pedido!\n\n";
+
+    // message += "*Pedido:*\n\n";
+    message += `*Cliente:* ${clientName}\n`;
+    message += `*Endereço:* ${location.replaceAll("\n", "")}\n\n`;
+
     items.forEach((item) => {
       message += `*${item.quantity}x ${item.name}*\n`;
       message += `   Preço: ${priceFormatter(item.price)}\n`;
@@ -28,10 +49,12 @@ export function CartSummary() {
     });
     message += `\n*Total: ${priceFormatter(total)}*`;
 
-    const phoneNumber = "5581993766292";
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+    console.log(message);
+
+    const url = `https://wa.me/${catalog?.phone_number}?text=${encodeURIComponent(
       message,
     )}`;
+
     window.open(url, "_blank");
 
     toast.success("Pedido enviado para o WhatsApp!");
@@ -46,13 +69,37 @@ export function CartSummary() {
           <h2 className="text-2xl font-bold">Seu Pedido</h2>
         </div>
 
+        {items.length != 0 && (
+          <div className="flex flex-col gap-4 mb-1">
+            <div className="flex flex-col">
+              <Label className="px-1 py-2 font-bold text-md">Nome:</Label>
+              <Input
+                value={clientName}
+                onChange={(a) => setClientName(a.target.value)}
+              />
+            </div>
+            <div className="flex flex-col">
+              <Label className="px-1 py-2 font-bold text-md">Endereço:</Label>
+              <Textarea
+                rows={2}
+                value={location || ""}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Ex.:Rua das Flores, 123 - São Paulo - SP"
+              />
+            </div>
+            <div className="flex flex-col border-b border-b-zinc-300 py-2">
+              <span className="font-bold text-2xl">Items</span>
+            </div>
+          </div>
+        )}
+
         {items.length === 0 ? (
           <p className="text-center text-muted-foreground py-8">
             Seu carrinho está vazio
           </p>
         ) : (
           <>
-            <div className="space-y-4 mb-6 max-h-96 overflow-y-auto">
+            <div className="space-y-4 mb-6 max-h-96 overflow-y-auto px-2">
               {items.map((item) => (
                 <div key={item.id} className="border-b border-border pb-4">
                   <div className="flex justify-between items-start mb-2">
@@ -112,7 +159,7 @@ export function CartSummary() {
 
               <Button
                 onClick={handleWhatsAppOrder}
-                className="w-full text-lg py-6"
+                className="w-full py-6"
                 size="lg"
               >
                 Enviar Pedido pelo WhatsApp

@@ -1,5 +1,19 @@
 import supabase from "@/supabase";
 import { Address, Catalog, OpeningHours } from "./catalog-schema";
+import z from "zod";
+import Elysia from "elysia";
+
+export const catalogController = new Elysia({ prefix: "/catalog" }).get(
+  "/",
+  async ({ query: { slug } }) => {
+    return getCatalogBySlug(slug);
+  },
+  {
+    query: z.object({
+      slug: z.string(),
+    }),
+  },
+);
 
 export async function getCatalogBySlug(slug?: string) {
   const { data, error } = await supabase
