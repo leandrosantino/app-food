@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/contexts/CartContext";
 import { priceFormatter } from "@/formatters/priceFormatter";
 import { eden } from "@/lib/eden";
-import { getCatalogBySlug } from "@/services/catalog/catalog-controller";
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -87,7 +86,7 @@ export function CartSummary() {
                 placeholder="Ex.:Rua das Flores, 123 - São Paulo - SP"
               />
             </div>
-            <div className="flex flex-col border-b border-b-zinc-300 py-2">
+            <div className="flex flex-col border-b border-b-zinc-300 py-2 mb-2">
               <span className="font-bold text-2xl">Items</span>
             </div>
           </div>

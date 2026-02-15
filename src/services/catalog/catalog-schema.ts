@@ -12,6 +12,7 @@ export const catalogSchema = z.object({
   description: z.string(),
   instagran_link: z.string(),
   theme_color: z.string(),
+  brand_image_url: z.string(),
 });
 
 export type Catalog = z.infer<typeof catalogSchema>;
